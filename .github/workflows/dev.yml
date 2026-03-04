@@ -1,0 +1,24 @@
+name: Deploy Dev
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+        cache: 'npm'
+    - run: npm install
+    - run: npx ng build --configuration dev
+    - uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: dtytdevsrv
+        password: qM4^%X8_/Sh-F'~5(?
+        protocol: ftp
+        local-dir: ./dist/dtyt-rifas-admin/
+        server-dir: admin-rifas.ct.ws/

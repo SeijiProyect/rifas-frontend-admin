@@ -1,0 +1,46 @@
+<div class="spinner">
+    <mat-spinner ng-animate="'animate'" color="accent" *ngIf="loading"></mat-spinner>
+</div>
+<div class="general-container">
+    <div>
+        <div id="main-text">
+            <p>
+                VIAJES
+            </p>
+        </div>
+
+        <div id="rifas-box" [class.loading]="loading">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #tabla1>
+
+                <ng-container matColumnDef="Id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td mat-cell *matCellDef="let viaje"> {{viaje.viaje_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Fecha_ini">
+                    <th mat-header-cell *matHeaderCellDef> Fecha Inicio</th>
+                    <td mat-cell *matCellDef="let viaje">{{viaje.viaje_fecha_ini.date | date:'dd-MM-yyyy'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let viaje"> {{viaje.viaje_nombre}} </td>
+                </ng-container>
+
+                <!-- Buttons Column -->
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let viaje">
+                        <button mat-raised-button color="primary" matTooltip="Generar" (click)="Generar(viaje)">
+                            Generar Formulario</button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+        </div>
+        <mat-paginator [length]="totalViajes" [pageSize]="20" hidePageSize="true" (page)="pageEvent($event)">
+        </mat-paginator>
+    </div>
+</div>

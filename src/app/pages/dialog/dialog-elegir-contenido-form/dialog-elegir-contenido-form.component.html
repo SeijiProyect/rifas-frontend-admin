@@ -1,0 +1,40 @@
+<br>
+<mat-dialog-content class="content-text">
+    <div [formGroup]="toppings">
+        <h1>Seleccionar Contenido en Formulario</h1>
+        <br>
+        <p>Incluir la opción de elegir el itinerario? &nbsp;
+            <mat-checkbox formControlName="itinerarios" [(ngModel)]="checkedIti"></mat-checkbox>
+        </p>
+        <div *ngIf="checkedIti == false">
+            <app-itinerarios-list-by-viaje [(ngModel)]="model.itinerario" [selectedViaje]="data.idViaje"
+                (selectItinerario)="itinerarioSeleccionado($event)"
+                (visible_itinerario)="recibirOcultarItinerario($event)">
+            </app-itinerarios-list-by-viaje>
+        </div>
+        <p>Incluir la opción de subir comprobante de seña? &nbsp;
+            <mat-checkbox formControlName="sena" [(ngModel)]="checkedSena"></mat-checkbox>
+        </p>
+        <!-- {{ data.idViaje}}-->
+    </div>
+    <br>
+    <section class="example-section" [formGroup]="toppings">
+        <h4> <strong>Elegiste:</strong></h4>
+        <!-- {{toppings.value | json}}-->
+        <p>Itinerario:&nbsp;
+            <span *ngIf="checkedIti == true">Incluir Opción</span>
+            <span *ngIf="checkedIti == false">{{ selectItinerario.Nombre}}</span>
+        </p>
+        <p>Seña:&nbsp;
+            <span *ngIf="checkedSena == false"> No Incluir Opción</span>
+            <span *ngIf="checkedSena == true"> Incluir</span>
+        </p>
+
+    </section>
+</mat-dialog-content>
+<br>
+<mat-dialog-actions>
+    <button mat-raised-button (click)="onConfirmClick()" class="btn-dialog btn-confirm" color="primary">Aceptar</button>
+    <button mat-button class="btn-dialog btn-cancel" color="primary" (click)="onNoClick()">No</button>
+</mat-dialog-actions>
+<br>

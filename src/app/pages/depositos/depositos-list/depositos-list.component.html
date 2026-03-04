@@ -1,0 +1,133 @@
+<div class="spinner">
+    <mat-spinner ng-animate="'animate'" color="accent" *ngIf="loading"></mat-spinner>
+</div>
+<div class="general-container">
+    <div>
+        <div id="main-text">
+            <p>
+                DEPÓSITOS
+            </p>
+        </div>
+        <div class="table-filters">
+            <div class="table-filters-row">
+                <div class="table-filters-item-full-width">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput placeholder="Depósito Id, pasajero id, persona id, monto, nombres, apellidos, cédula o celular..." [(ngModel)]="termino">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="table-filters-row">
+                <div class="table-filters-item table-filters-item-1">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tipo</mat-label>
+                        <mat-select (selectionChange)="statusChange($event)" [disabled]="loading">
+                            <mat-option value="todos">Todos</mat-option>
+                            <mat-option value="Contado">Contado</mat-option>
+                            <mat-option value="Credito">Crédito</mat-option>
+                            <mat-option value="Debito">Débito</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="table-filters-item table-filters-item-2">
+                    <app-autocomplete title="Pasajeros" *ngIf="!pasajerosLoading" [options]="pasajeros" (result)="pasajeroChange($event)"></app-autocomplete>
+                </div>
+                <div class="table-filters-item table-filters-item-3 table-filters-item-datepicker">
+                    <app-datepicker (dateStart)="desdeValue=$event" (dateEnd)="hastaValue=$event" label="Ingresar rango:"></app-datepicker>
+                </div>
+                <div class="table-filters-btn table-filters-item-4">
+                    <div class="general-btn blue-btn" (click)="filter()">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
+                        <div class="btn-text">FILTRAR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rifas-box" [class.loading]="loading">
+            <table mat-table matSort [dataSource]="depositos" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="{{column.key}}" *ngFor="let column of columnsToDisplayVal">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> {{column.name}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="column.name == 'Pasajero'">
+                            <span>{{element['Nombres']}} {{element['Apellidos']}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="column.name != 'Pasajero'">
+                            {{element[column.key]}}
+                        </ng-container>
+                    </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+                            <div class="detail-deposito">
+                                <div class="detail-talon-item detail-talon-pasajero">
+                                    <div class="detail-talon-title">
+                                        Pasajero
+                                    </div>
+                                    <div class="detail-talon-description" *ngIf="globalService.isDtyt">
+                                        <ng-container *ngIf="element.PasId">
+                                            <strong>Pasajero Id:</strong> {{ element.PasId }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.PerId">
+                                            <strong>Persona Id:</strong> {{ element.PerId }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.Nombres">
+                                            <strong>Nombre:</strong> {{ element.Nombres }} {{ element.Apellidos }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.Cedula">
+                                            <strong>Cédula:</strong> {{ element.Cedula }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.ViajeNombre">
+                                            <strong>Viaje:</strong> {{ element.ViajeNombre }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.ItinerarioNombre">
+                                            <strong>Itinerario:</strong> {{ element.ItinerarioNombre }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.UniversidadNombre">
+                                            <strong>Universidad:</strong> {{ element.UniversidadNombre }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.PasajeroEstado">
+                                            <strong>Estado:</strong> {{ element.PasajeroEstado }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.PasajeroComentarios">
+                                            <strong>Comentarios:</strong> {{ element.PasajeroComentarios }}<br>
+                                        </ng-container>
+                                    </div>
+                                    <div class="detail-talon-description" *ngIf="globalService.isCcee">
+                                        <ng-container *ngIf="element.Nombres">
+                                            <strong>Nombre:</strong> {{ element.Nombres }} {{ element.Apellidos }}<br>
+                                        </ng-container>
+                                        <ng-container *ngIf="element.Cedula">
+                                            <strong>Cédula:</strong> {{ element.Cedula }}<br>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <ng-container *ngIf="globalService.isDtyt">
+                    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
+                    </tr>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                </ng-container>
+
+                <ng-container *ngIf="globalService.isCcee">
+                    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;">
+                    </tr>
+                </ng-container>
+
+            </table>
+        </div>
+
+        <mat-paginator [length]="totalDepositos" [pageSize]="20"
+                       hidePageSize="true" (page)="pageEvent($event)">
+        </mat-paginator>
+
+    </div>
+</div>

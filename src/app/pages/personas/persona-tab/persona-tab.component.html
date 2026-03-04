@@ -1,0 +1,30 @@
+<body>
+    <app-persona-list-viaje (mensaje)="pasajeroSeleccionado($event)"></app-persona-list-viaje>
+    <mat-tab-group>
+        <mat-tab label="Datos Personales">
+            <div>
+                <app-persona-form>
+                </app-persona-form>
+            </div>
+        </mat-tab>
+        <mat-tab label="Pasajero">
+            <div>
+                <app-pasajero-form [selectedPasajero]="pasajero_id">
+                </app-pasajero-form>
+            </div>
+        </mat-tab>
+        <mat-tab label="Dinero">
+            <app-dinero></app-dinero>
+        </mat-tab>
+        <mat-tab label="Documentos">
+            <div>
+                <app-documentos-list-persona [selectedPasajero]="pasajero_id">
+                </app-documentos-list-persona>
+            </div>
+        </mat-tab>
+        <mat-tab label="Logistica">
+            <section class="example-section">
+            </section>
+        </mat-tab>
+    </mat-tab-group>
+</body>

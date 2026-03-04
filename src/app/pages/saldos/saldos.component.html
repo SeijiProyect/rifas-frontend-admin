@@ -1,0 +1,170 @@
+<div class="spinner">
+  <mat-spinner ng-animate="'animate'" color="accent" *ngIf="loading"></mat-spinner>
+</div>
+<div class="general-container">
+  <div>
+    <div id="main-text">
+      <p>
+        SALDOS DE PASAJEROS
+      </p>
+    </div>
+
+    <div class="table-filters">
+      <div class="table-filters-item-full-width">
+        <div class="table-filters-row">
+          <!-- <div class="table-filters-item table-filters-item-1">
+                  <mat-form-field appearance="fill">
+                      <mat-label>Estado</mat-label>
+                      <mat-select (selectionChange)="statusChange($event)" [disabled]="loading">
+                          <mat-option value="todos">Todos</mat-option>
+                          <mat-option value="A">Activo</mat-option>
+                          <mat-option value="I">Inactivo</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div> -->
+          <div class="table-filters-item table-filters-item-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Viajes</mat-label>
+              <mat-select (selectionChange)="viajeChange($event)" [disabled]="loading">
+                <mat-option value="todos">Todos</mat-option>
+                <mat-option *ngFor="let viaje of viajes" [value]="viaje.id">{{ viaje.Nombre }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="table-filters-item table-filters-item-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Itinerarios</mat-label>
+              <mat-select (selectionChange)="itinerarioChange($event)" [disabled]="loading">
+                <mat-option value="todos">Todos</mat-option>
+                <mat-option *ngFor="let itinerario of itinerarios" [value]="itinerario.id">{{ itinerario.Nombre
+                  }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="table-filters-btn table-filters-item-4">
+            <div class="general-btn blue-btn" (click)="filter(); filtradoIsTrue()">
+              <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
+              <div class="btn-text">FILTRAR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-filters-row">
+        <div class="table-filters-item-full-width">
+          <div class="slider-container">
+            <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" step="10" min="0" max="100"
+              aria-label="units" (change)="updateSettingSlider($event)" [value]="porcentaje_saldo">
+            </mat-slider>
+
+            <div>
+              Porcentaje recaudado (Mayor que): {{ porcentaje_saldo }}%
+            </div>
+
+            <div class="general-btn blue-btn" style="margin-left: 3%;" (click)="exportToExcel()">
+              <div class="btn-text">EXPORTAR TABLA</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="this.filtradoEsVerdadero" class="table-filters-row">
+        <div class="table-filters-item-full-width">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Buscar dentro de lo filtrado</mat-label>
+            <input matInput placeholder="Nombres, apellidos, pasajero id ..." [(ngModel)]="termino"
+              (ngModelChange)="filtrarNuevamente()">
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <div id="rifas-box" [class.loading]="loading">
+      <table id="tabla1" mat-table matSort [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8"
+        #tabla1> <!-- *ngIf="filtradoEsVerdadero == true" -->
+        <ng-container matColumnDef="Id">
+          <th mat-header-cell *matHeaderCellDef> Código </th>
+          <td mat-cell *matCellDef="let pasajero" class="long-codigo">
+            {{pasajero.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Nombre">
+          <th mat-header-cell *matHeaderCellDef class="nombre-columna-centrada"> Nombre </th>
+          <td mat-cell *matCellDef="let pasajero" class="long-nombre">
+            <button mat-button
+            (click)="datosPasajero(pasajero.persona_id)">{{pasajero.nombre}}
+            {{pasajero.apellido}}
+        </button></td>
+        </ng-container>
+
+        <ng-container matColumnDef="Celular">
+          <th mat-header-cell *matHeaderCellDef> Celular </th>
+          <td mat-cell *matCellDef="let pasajero" class="long-celular">
+            {{pasajero.celular}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let pasajero" class="long-email">
+            {{pasajero.email}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Itinerario">
+          <th mat-header-cell *matHeaderCellDef> Itinerario </th>
+
+          <td mat-cell *matCellDef="let pasajero" class="long-itinerario">
+            <ng-container>
+              {{ pasajero.itinerario }}
+            </ng-container>
+          </td>
+
+        </ng-container>
+
+        <ng-container matColumnDef="CostoTotal">
+          <th mat-header-cell *matHeaderCellDef class="nombre-columna-centrada"> Costo total </th>
+          <td mat-cell *matCellDef="let pasajero">
+
+            <tr>
+              <td class="long-nombre">
+                {{ pasajero.costoTotal }}
+              </td>
+            </tr>
+
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="RecaudadoTotal">
+          <th mat-header-cell *matHeaderCellDef class="nombre-columna-centrada"> Recaudado total </th>
+          <td mat-cell *matCellDef="let pasajero">
+            <tr>
+              <td class="long-nombre">
+                {{ pasajero.recaudadoTotal }}
+              </td>
+            </tr>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Resumen">
+
+          <th mat-header-cell *matHeaderCellDef class="nombre-columna-centrada"> Saldo </th>
+          <td mat-cell *matCellDef="let pasajero">
+            <tr>
+              <td class="long-nombre">
+                {{ pasajero.diferencia * (-1) }}
+              </td>
+            </tr>
+          </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+      </table>
+    </div>
+
+  </div>
+
+
+
+</div>

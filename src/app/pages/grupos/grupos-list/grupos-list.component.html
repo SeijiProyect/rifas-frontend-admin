@@ -1,0 +1,10 @@
+<form [formGroup]="form">
+    <mat-form-field appearance="fill">
+        <mat-label>Seleccionar Grupo</mat-label>
+        <mat-select (selectionChange)="grupoChange($event)" formControlName="grupo">
+            <!--<mat-option value="todos">Todos</mat-option>-->
+            <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">
+                {{grupo.nombre }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

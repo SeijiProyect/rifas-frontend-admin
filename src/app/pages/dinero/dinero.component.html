@@ -1,0 +1,90 @@
+<div class="container-sticky">
+  <div class="header-sticky">
+    <table class="sticky-row-left">
+      <!-- Ejecuto los calculos internos -->
+      {{calcularTotales()}}
+      <tr style="font-size: 22px;">
+        <th>Costo total:</th>
+        <td>
+          {{ totalCosto }}
+        </td>
+      </tr>
+
+      <tr style="font-size: 18px;">
+        <th>Reacaudado total (depósitos + extras):</th>
+        <td>
+          {{ recaudado_extra_negativo_total | number : '.2-2'}}
+        </td>
+      </tr>
+
+      <tr *ngIf="(recaudado_extra_negativo_total - totalCosto) >= 0">
+        <th class="dineroAFavor">Dinero a favor:</th>
+        <td class="dineroAFavor">
+          {{ recaudado_extra_negativo_total - totalCosto | number : '.2-2' }}
+        </td>
+      </tr>
+
+      <tr *ngIf="(recaudado_extra_negativo_total - totalCosto) < 0">
+        <th class="saldoApagar">Saldo a pagar:</th>
+        <td class="saldoApagar">
+          <b>{{ (recaudado_extra_negativo_total - totalCosto) * (-1) | number : '.2-2'}}</b>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+  <div class="table-container">
+    <table class="tableLeft">
+      <caption style="position: sticky;"> </caption>
+      <tr style="font-size: 18px;">
+        <th>Precio Itinerario:</th>
+        <td> {{ itinerario_precio }} </td>
+      </tr>
+      <tr>
+        <th style="font-size: 22px;">Costos Extra:</th>
+        <td></td>
+      </tr>
+      <tr *ngFor="let costo of costos">
+        <th> &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;{{ costo.Descripcion }} </th>
+        <td id="tdCostoExtra"> {{ costo.Monto }} </td>
+        <mat-icon (click)=openConfirmDialog(costo) matTooltip="Eliminar" matTooltipPosition="above"
+          matTooltipShowDelay="100" style="font-size: 120%; cursor:pointer;">delete_forever</mat-icon>
+      </tr>
+      <br>
+      <tr>
+        <td style="text-align: right;">
+          <button mat-raised-button (click)="openDialog()">
+            Agregar nuevo costo extra
+          </button>
+        </td>
+      </tr>
+    </table>
+    <br>
+  </div>
+  <br>
+  <br>
+</div>
+<br>
+<br>
+<hr>
+<div class="row">
+</div>
+<app-depositos-list-pasajero></app-depositos-list-pasajero>
+
+<table class="tableLeft" style="font-size: 18px; margin:20px;">
+  <tr>
+    <th>Total depositado:</th>
+    <td>{{ deposito_total }}</td>
+  </tr>
+  <tr>
+    <th>Total registrado:</th>
+    <td>{{ registro_total }}</td>
+  </tr>
+  <tr>
+    <th>Total recaudado: </th>
+    <td>{{ recaudado_total | number : '.2-2'}}</td>
+    <td>Pago Personal: {{ pago_personal_total}}</td>
+    <td>Rifas: {{ rifas_recaudado | number : '.2-2'}}</td>
+  </tr>
+</table>

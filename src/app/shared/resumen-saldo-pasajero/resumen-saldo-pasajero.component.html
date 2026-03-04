@@ -1,0 +1,30 @@
+<table class="sticky-row-left">
+  <tr >
+    <th>Costo total:</th>
+    <td >
+      {{ this.totalCosto }}
+    </td>
+  </tr>
+
+  <tr>
+    <th>Reacaudado total (depósitos + extras):</th>
+    <td>
+      {{ recaudadoTotal() }}
+    </td>
+  </tr>
+
+  <tr *ngIf="(recaudadoTotal() - costoTotal()) >= 0">
+    <th class="dineroAFavor">Dinero a favor:</th>
+    <td class="dineroAFavor">
+      {{ recaudadoTotal() - costoTotal() }}
+    </td>
+  </tr>
+
+  <tr *ngIf="(recaudadoTotal() - costoTotal()) < 0">
+    <th class="saldoApagar">Saldo a pagar:</th>
+    <td class="saldoApagar">
+      <b>{{ (recaudadoTotal() - costoTotal()) * (-1) }}</b>
+    </td>
+  </tr>
+
+</table>

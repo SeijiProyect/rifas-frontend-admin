@@ -1,0 +1,56 @@
+
+<div class="general-container">
+    <div>
+        <div id="main-text">
+            <p>
+                SORTEOS
+            </p>
+        </div>
+        <div id="sorteos-box" >
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #tabla1>
+                <ng-container matColumnDef="Id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td mat-cell *matCellDef="let sorteo"> {{sorteo.sorteo_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Numero">
+                    <th mat-header-cell *matHeaderCellDef> Numero </th>
+                    <td mat-cell *matCellDef="let sorteo"> {{sorteo.sorteo_numero}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Fecha">
+                    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                    <td mat-cell *matCellDef="let sorteo"> {{  sorteo.sorteo_fecha?.date | date:'dd/MM/y' }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Desde">
+                    <th mat-header-cell *matHeaderCellDef> Desde </th>
+                    <td mat-cell *matCellDef="let sorteo"> {{sorteo.numero_inicial}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Hasta">
+                    <th mat-header-cell *matHeaderCellDef> Hasta </th>
+                    <td mat-cell *matCellDef="let sorteo"> {{sorteo.numero_final}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Rifa">
+                    <th mat-header-cell *matHeaderCellDef> Rifa </th>
+                    <td mat-cell *matCellDef="let sorteo"> {{sorteo.rifa_nombre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let sorteo">
+                        <button mat-raised-button color="accent" matTooltip="Editar" (click)="Editar(sorteo)"><mat-icon>edit</mat-icon></button>
+                        <button mat-raised-button color="warn" matTooltip="Borrar" (click)="Eliminar(sorteo)"><mat-icon>delete_forever</mat-icon></button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+        </div>
+        <mat-paginator [pageSize]="20" hidePageSize="true" (page)="pageEvent($event)">
+        </mat-paginator>
+    </div>
+</div>

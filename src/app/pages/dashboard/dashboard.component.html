@@ -1,0 +1,36 @@
+<div id="header" class="logged">
+  <img id="logo" [src]="globalService.getLogoRifasUrl()">
+  <button mat-button [matMenuTriggerFor]="beforeMenu" class="logout-btn"><mat-icon>menu</mat-icon></button>
+  <mat-menu #beforeMenu="matMenu" xPosition="before" id="main-menu">
+    <button mat-menu-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/dashboard"><mat-icon>home</mat-icon> Inicio</button>
+    <button mat-menu-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/dashboard/depositos/depositos-tab"><mat-icon>local_atm</mat-icon> Depósitos</button>
+    <button mat-menu-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/dashboard/saldos"><mat-icon>payments</mat-icon> Saldos</button>
+    <button mat-menu-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/dashboard/personas/list"><mat-icon>accessibility_rounded </mat-icon> Personas</button>
+    <button mat-menu-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/dashboard/depositos/procesar-csv"><mat-icon>cloud_upload</mat-icon> Procesar CSV</button>
+    <button *ngIf="globalService.isDtyt" mat-menu-item routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/dashboard/rifas/rifas-tab"><mat-icon>confirmation_number</mat-icon> Rifas</button>
+    <button *ngIf="globalService.isDtyt" mat-menu-item routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{exact: true}" routerLink="/dashboard/pasajeros"><mat-icon> person_pin</mat-icon>
+      Pasajeros</button>
+    <button mat-menu-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/dashboard/viajes/viajes-tab"><mat-icon>card_travel</mat-icon> Viajes</button>
+    <button *ngIf="globalService.isDtyt" mat-menu-item routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{exact: true}" routerLink="/dashboard/links"><mat-icon> link </mat-icon> Links de
+      pagos</button>
+    <!-- <button mat-menu-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" routerLink="/dashboard/depositos/editar"><mat-icon>payments</mat-icon> Editar Depósito</button>-->
+    <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon> Logout</button>
+  </mat-menu>
+</div>
+<div>
+  <router-outlet></router-outlet>
+  <div class="clearfix"></div>
+</div>
+
+<footer>
+</footer>

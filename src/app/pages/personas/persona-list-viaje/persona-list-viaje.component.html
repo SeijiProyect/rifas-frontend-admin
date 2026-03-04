@@ -1,0 +1,10 @@
+<mat-form-field appearance="fill">
+    <mat-label>Viajes de la persona</mat-label>
+    <mat-select [(value)]="selected" (selectionChange)="viajeChange($event)">
+        <mat-option *ngFor="let viaje of viajes" [value]="viaje.viaje_id">ID VIAJE:{{viaje.viaje_id}} Grupo: {{ viaje.grupo_nombre }} /
+            Viaje: {{ viaje.viaje_nombre }} / Itinerario: {{viaje.itinerario_nombre}} </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<!--<p>You selected: {{selected}}</p>
+<p>PERSONA selected: {{idPersona}}</p>-->

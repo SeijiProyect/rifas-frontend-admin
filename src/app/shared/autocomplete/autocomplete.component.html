@@ -1,0 +1,10 @@
+<mat-form-field [appearance]="type">
+    <mat-label>{{ title }}</mat-label>
+    <input type="text" placeholder="" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getTitle.bind(this)">
+        Todos
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.pasajero_id">
+            {{option.apellidos}}, {{option.nombres}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

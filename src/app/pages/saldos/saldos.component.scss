@@ -1,0 +1,43 @@
+.long-codigo {
+  width: 5%;
+}
+
+.long-itinerario {
+  width: 15%;
+}
+
+.long-celular {
+  width: 10%;
+}
+
+.long-nombre {
+  width: 18%;
+  text-align: center;
+}
+
+.long-email {
+  width: 22%;
+}
+
+.nombre-columna-centrada {
+  text-align: center;
+}
+
+.resumen {
+  text-align: center !important;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+}
+
+.slider-container mat-slider {
+  margin-right: 10px;
+}
+
+.mat-slider-horizontal {
+  height: 48px;
+  min-width: 70%;
+  margin-right: 10%;
+}

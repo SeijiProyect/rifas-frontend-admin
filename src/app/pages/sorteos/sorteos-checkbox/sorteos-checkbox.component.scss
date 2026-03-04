@@ -1,0 +1,85 @@
+.mat-grid-tile .mat-grid-tile-header,
+.mat-grid-tile .mat-grid-tile-footer {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255);
+  overflow: hidden;
+  padding: 0 16px;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.example-viewport {
+  margin: 10px;
+  height: 104px;
+  width: 600px;
+  border: 2px solid rgb(212, 212, 207);
+}
+
+.example-item {
+  height: 50px;
+}
+
+.container {
+  width: 100%;
+}
+
+.colum-left {
+  width: 47%;
+  float: left;
+}
+
+.colum-right {
+  width: 47%;
+  float: right;
+}
+
+.table {
+  th {
+    font: 400 17px / 2px Roboto, "Helvetica Neue", sans-serif;
+    color: black;
+  }
+
+  td {
+    padding: 0.6rem;
+    color: black;
+    font: 400 17px / 2px Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  tr {
+    padding: 0.5rem;
+  }
+}
+
+input[type="checkbox" i] {
+
+  margin: 1px 1px 1px 1px;
+  
+}
+
+#blankCheckbox{
+  width: 20px;
+  height: 20px;
+}
+
+// 2560px — 1024px: Small screens, laptops (High Definition)
+@media (max-width: 2560px) {
+
+  .example-viewport {
+    height: 250px;
+    width: 750px;
+  }
+
+  .colum-right {
+    width: 47%;
+    float: right;
+  }
+
+  .colum-right mat-checkbox{
+  margin-top: 10%;
+  }
+  
+}

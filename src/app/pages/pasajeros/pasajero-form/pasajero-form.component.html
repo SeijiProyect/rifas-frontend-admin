@@ -1,0 +1,53 @@
+<form [formGroup]="formDatosPasajero">
+  <mat-grid-list cols="2" rowHeight="8:1">
+
+    <mat-grid-tile class="left-grid-tile">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label for="pasajero_id">Pasajero Id: </mat-label>
+        <input matInput [(ngModel)]="model.id" name="pasajero_id" formControlName="pasajero_id" type="text"
+          class="form-control" id="pasajero_id">
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="left-grid-tile">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label for="acompaniante">Titular/Acompañante: </mat-label>
+        <input matInput [(ngModel)]="model.acompaniante" name="acompaniante" formControlName="acompaniante" type="text"
+          class="form-control" id="acompaniante">
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="left-grid-tile">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label for="itinerario_id">Itinerario Id: </mat-label>
+        <input matInput [(ngModel)]="itinerario.id" name="itinerario_id" formControlName="itinerario_id" type="text"
+          class="form-control" id="itinerario_id">
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="left-grid-tile">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label for="itinerario_nombre">Nombre del itinerario: </mat-label>
+        <input matInput [(ngModel)]="itinerario.nombre" name="itinerario_nombre" formControlName="itinerario_nombre"
+          type="text" class="form-control" id="itinerario_nombre">
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="left-grid-tile">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label for="itinerario_precio">Precio del itinerario: </mat-label>
+        <input matInput [(ngModel)]="itinerario.precio" name="itinerario_precio" formControlName="itinerario_precio"
+          type="text" class="form-control" id="itinerario_precio">
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="left-grid-tile">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label for="comentario">Comentario: </mat-label>
+        <textarea matInput [(ngModel)]="model.comentarios" name="comentario" formControlName="comentario"
+          class="form-control" id="comentario"></textarea>
+      </mat-form-field>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</form>

@@ -1,0 +1,252 @@
+<div class="spinner">
+    <mat-spinner ng-animate="'animate'" color="accent" *ngIf="loading"></mat-spinner>
+</div>
+<div class="general-container">
+    <div>
+        <div id="main-text">
+            <p>
+                TALONES
+            </p>
+        </div>
+        <div class="table-filters">
+            <div class="table-filters-row">
+                <div class="table-filters-item table-filters-item-1">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Rifas</mat-label>
+                        <mat-select [(value)]="selectedRifa" (selectionChange)="rifaChange($event)">
+                            <mat-option value="todos">Todos</mat-option>
+                            <mat-option *ngFor="let rifa of rifas_select" [value]="rifa.rifa_id">
+                                Rifa: {{ rifa.rifa_nombre}}
+                                / Fecha: {{rifa.rifa_fechaInicio}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="table-filters-item table-filters-item-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Sorteos</mat-label>
+                        <mat-select [(value)]="selectedSorteo" (selectionChange)="sorteoChange($event)">
+                            <mat-option value="todos">Todos</mat-option>
+                            <mat-option *ngFor="let sorteo of sorteos" [value]="sorteo.sorteo_id">
+                                {{sorteo.name}} / Fecha: {{sorteo.sorteo_fecha.date | date:'yyyy-MM-dd'}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="table-filters-row">
+                <div class="table-filters-item table-filters-item-1">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Estado</mat-label>
+                        <mat-select (selectionChange)="statusChange($event)" [disabled]="loading">
+                            <mat-option value="todos">Todos</mat-option>
+                            <mat-option value="Pendiente de Pago">Pendiente de Pago</mat-option>
+                            <mat-option value="Para transferir">Para Transferir</mat-option>
+                            <mat-option value="Solicitada">Solicitada</mat-option>
+                            <mat-option value="Pago">Pagada</mat-option>
+                            <mat-option value="Pago premio">Pago de Premio</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="table-filters-item table-filters-item-2">
+                    <app-autocomplete title="Pasajeros" *ngIf="!pasajerosLoading" [options]="pasajeros"
+                        (result)="pasajeroChange($event)"></app-autocomplete>
+                </div>
+                <div class="table-filters-item table-filters-item-3 half">
+                    <mat-form-field class="example-form-field" appearance="fill">
+                        <mat-label>Desde</mat-label>
+                        <input matInput type="text" [(ngModel)]="desdeValue" [disabled]="loading">
+                        <button *ngIf="desdeValue" matSuffix mat-icon-button aria-label="Clear" (click)="desdeValue=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field" appearance="fill">
+                        <mat-label>Hasta</mat-label>
+                        <input matInput type="text" [(ngModel)]="hastaValue" [disabled]="loading">
+                        <button *ngIf="hastaValue" matSuffix mat-icon-button aria-label="Clear" (click)="hastaValue=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <div class="table-filters-btn table-filters-item-4">
+                    <!-- <button mat-raised-button color="primary">Filtrar</button> -->
+                    <div class="general-btn blue-btn" (click)="filter()">
+                        <!-- <div class="general-btn blue-btn" (click)="filtrar()"> -->
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
+                        <div class="btn-text">FILTRAR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="column == 'Sorteos'">
+                        <div class="sorteo-item" *ngFor="let tal of element.Sorteos; let i = index;"
+                            [class.pagada]="tal.Estado == 'Pago'" [class.pago-premio]="tal.Estado == 'Pago premio'"
+                            [class.pendiente]="tal.Estado == 'Pendiente de Pago'"
+                            [class.solicitada]="tal.Estado == 'Solicitada'"
+                            [class.paratransferir]="tal.Estado == 'Para transferir'" [class.selected]="tal.selected">
+                            {{ tal.sorteo_numero }}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="column != 'Sorteos'">
+                        {{element[column]}}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let talon of element.Sorteos" (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false" class="rifa-container">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="expanded-talon-item expanded-talon-item-id">
+                                            <strong>Id:</strong><br>{{ talon.id_talon }}
+                                        </div>
+                                        <div class="expanded-talon-item expanded-talon-item-sorteo">
+                                            <strong>Sorteo:</strong><br>{{talon.sorteo_numero }}
+                                        </div>
+                                        <div class="expanded-talon-item expanded-talon-item-pasajero">
+                                            <strong>Pasajero:</strong><br> <button mat-button
+                                                (click)="datosPasajero(talon.persona_id)">{{talon.pasajero_nombres}}
+                                                {{talon.pasajero_apellidos}}
+                                            </button>
+                                        </div>
+                                        <div class="expanded-talon-item expanded-talon-item-precio">
+                                            <strong>Depósito:</strong><br> 
+                                                {{talon.deposito_tipo}}
+                                            
+                                        </div>
+                                        <div class="expanded-talon-item expanded-talon-item-fecha-registro">
+                                            <strong>Comprador:</strong><br><button mat-button
+                                                (click)="openDialogComprador(talon.comprador_id)">{{talon.comprador_nombre}}
+                                            </button>
+                                        </div>
+                                        <div class="expanded-talon-item expanded-talon-item-status">
+                                            <div class="talon-item" [class.pagada]="talon.Estado == 'Pago'"
+                                                [class.pendiente]="talon.Estado == 'Pendiente de Pago'"
+                                                [class.pago-premio]="talon.Estado == 'Pago premio'"
+                                                [class.solicitada]="talon.Estado == 'Solicitada'"
+                                                [class.paratransferir]="talon.Estado == 'Para transferir'"
+                                                [class.selected]="talon.selected">
+                                                <div *ngIf="talon.Estado == 'Pendiente de Pago'" class="talon-status">
+                                                    PENDIENTE<br>DE PAGO</div>
+                                                <div *ngIf="talon.Estado == 'Para transferir'" class="talon-status">
+                                                    PARA<br>TRANSFERIR</div>
+                                                <div *ngIf="talon.Estado == 'Solicitada'" class="talon-status">
+                                                    SOLICITADA</div>
+                                                <div *ngIf="talon.Estado == 'Pago'" class="talon-status">PAGADA</div>
+                                                <div *ngIf="talon.Estado == 'Pago premio'" class="talon-status">PAGO
+                                                    DE<br>PREMIO</div>
+                                            </div>
+                                        </div>
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                                        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                                    </mat-panel-description>-->
+                                </mat-expansion-panel-header>
+
+                                <div class="detail-talon">
+                                    <div class="detail-talon-item detail-talon-pasajero">
+                                        <div class="detail-talon-title">
+                                            Pasajero
+                                        </div>
+                                        <div class="detail-talon-description">
+                                            <ng-container *ngIf="talon.persona_id">
+                                                <strong>Persona Id:</strong> {{ talon.persona_id }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.pasajero_nombres">
+                                                <strong>Nombre:</strong> {{ talon.pasajero_nombres }} {{
+                                                talon.pasajero_apellidos }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.persona_cedula">
+                                                <strong>Cédula:</strong> {{ talon.persona_cedula }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.persona_celular">
+                                                <strong>Celular:</strong> {{ talon.persona_celular }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.persona_email">
+                                                <strong>Email:</strong> {{ talon.persona_email }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.pasajero_viaje">
+                                                <strong>Viaje:</strong> {{ talon.pasajero_viaje }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.pasajero_itinerario">
+                                                <strong>Itinerario:</strong> {{ talon.pasajero_itinerario }}<br>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="detail-talon-item detail-talon-deposito">
+                                        <div class="detail-talon-title">
+                                            Depósito
+                                        </div>
+                                        <div class="detail-talon-description" *ngIf="talon.deposito_id">
+                                            <ng-container *ngIf="talon.deposito_id">
+                                                <strong>Id:</strong> {{ talon.deposito_id }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.deposito_monto">
+                                                <strong>Monto:</strong> {{ talon.deposito_monto }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.deposito_tipo">
+                                                <strong>Tipo:</strong> {{ talon.deposito_tipo }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.deposito_fecha">
+                                                <strong>Fecha:</strong> {{ talon.deposito_fecha?.date | date:'dd/MM/y'
+                                                }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.deposito_comentario">
+                                                <strong>Comentario:</strong> {{ talon.deposito_comentario }}<br>
+                                            </ng-container>
+                                        </div>
+                                        <div class="detail-talon-description" *ngIf="!talon.deposito_id">
+                                            No ha sido vendida
+                                        </div>
+                                    </div>
+                                    <div class="detail-talon-item detail-talon-comprador">
+                                        <div class="detail-talon-title">
+                                            Comprador
+                                        </div>
+                                        <div class="detail-talon-description" *ngIf="talon.comprador_id">
+                                            <ng-container *ngIf="talon.comprador_id">
+                                                <strong>Nombre:</strong> {{ talon.comprador_nombre }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.comprador_email">
+                                                <strong>Email:</strong> {{ talon.comprador_email }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.comprador_celular">
+                                                <strong>Celular:</strong> {{ talon.comprador_celular }}<br>
+                                            </ng-container>
+                                            <ng-container *ngIf="talon.comprador_departamento">
+                                                <strong>Departamento:</strong> {{ talon.comprador_departamento }}<br>
+                                            </ng-container>
+                                        </div>
+                                        <div class="detail-talon-description" *ngIf="!talon.comprador_id">
+                                            No ha sido vendida
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageIndex]="pageIndex" [length]="totalTalones" [pageSize]="20" hidePageSize="true" (page)="pageEvent($event)">
+        </mat-paginator>
+    </div>
+</div>

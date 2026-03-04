@@ -1,0 +1,50 @@
+.mat-form-field {
+  margin-right: 12px;
+  margin-top: 1.75em;
+}
+
+.mat-card-header {
+   display: inline;
+}
+
+.mat-card-title-group {
+   display: inline;
+}
+.mat-raised-button.mat-accent,
+.mat-stroked-button.mat-accent {
+  background-color: #ffeb3b;
+  color: #212121;
+}
+
+.form-control.login-user {
+    border: 0 solid #fff !important;
+}
+
+.example-button-row button,
+.example-button-row a {
+    margin-right: 20px;
+}
+
+.example-button-row {
+    margin-left: 9px;
+}
+
+.example-card {
+    margin: 10px;
+    padding: 20px;
+}
+
+.example-header-image{
+  background-image: url('/assets/imgs/imagen-pasajero.webp');
+}
+
+/* .my-grid-tile {
+  margin: 8px;
+}
+
+@media (min-width: 600px) {
+  .my-grid-tile {
+    margin: 16px;
+  }
+} */
+

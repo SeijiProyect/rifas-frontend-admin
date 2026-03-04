@@ -1,0 +1,31 @@
+<section class="container">
+  <div class="colum-left">
+    <form>
+      <cdk-virtual-scroll-viewport itemSize="10" class="example-viewport">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Lista de Sorteos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sorteo of sorteos">
+              <td>{{sorteo.name}} / Fecha: {{sorteo.sorteo_fecha.date | date:'yyyy-MM-dd'}}</td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1"
+                    aria-label="..." [checked]="sorteo.checked" (change)='getSorteoID($event, sorteo.sorteo_id)'>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </cdk-virtual-scroll-viewport>
+    </form>
+  </div>
+  <div class="colum-right">
+    <mat-checkbox [checked]="allComplete" (change)='seleccionarTodo($event.checked)'>
+      Todos
+    </mat-checkbox>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+.mat-card-actions:not(.mat-card-actions-align-end) .mat-raised-button:first-child,
+.mat-card-actions:not(.mat-card-actions-align-end) .mat-stroked-button:first-child {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+span{
+font-size: 0.8rem;
+font-weight: 700;
+background-color: #ffc4c4;
+padding: 10px 20px;
+margin: 20px 0px 20px 30px;
+position: relative;
+}
+
+.mat-card-header .mat-card-title {
+    color: #0f6946;
+}
+
+
+.example-button-row button,
+.example-button-row a {
+    margin-right: 20px;
+}
+
+.example-button-row {
+    margin-left: 9px;
+}
+
+mat-icon {
+    margin-right: 10px;
+}
+
+.mat-raised-button.mat-accent,
+.mat-stroked-button.mat-accent {
+    background-color: #ffeb3b;
+    color: #212121;
+}

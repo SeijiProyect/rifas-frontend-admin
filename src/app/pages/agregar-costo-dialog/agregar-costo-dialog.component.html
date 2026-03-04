@@ -1,0 +1,17 @@
+<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->
+<div mat-dialog-content>
+  <p>Completá los datos del costo extra:</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Descripción...</mat-label>
+    <input matInput [(ngModel)]="data.descripcion">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Monto:</mat-label>
+    <input matInput [(ngModel)]="data.monto">
+    <mat-error *ngIf="!isMontoValid()">El monto debe tener al menos un número distinto de cero.</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button  cdkFocusInitial (click)="onConfirmClick()">Agregar costo extra</button> <!-- [mat-dialog-close]="" -->
+</div>

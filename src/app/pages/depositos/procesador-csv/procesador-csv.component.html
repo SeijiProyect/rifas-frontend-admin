@@ -1,0 +1,91 @@
+<div class="spinner">
+    <mat-spinner ng-animate="'animate'" color="accent" *ngIf="loading"></mat-spinner>
+</div>
+<div class="general-container procesador-container">
+    <div>
+        <div id="main-text">
+            <p>
+                PROCESADOR DE DEPÓSITOS
+            </p>
+        </div>
+        <div class="table-filters">
+            <!-- <div class="table-filters-row">
+                <div class="table-filters-item-full-width">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput placeholder="Depósito Id, pasajero id, persona id, monto, nombres, apellidos, cédula o celular..." [(ngModel)]="termino">
+                    </mat-form-field>
+                </div>
+            </div> -->
+            <div class="table-filters-row" *ngIf="!loading">
+                <input placeholder="Archivo..." type="file" (change)="csvChangeEvent($event);" id="file-input">
+                <div class="main-btn" *ngIf="currentStep == 1">
+                    <div class="general-btn blue-btn" (click)="triggerFileInput()">
+                        <div class="btn-text">ELEGIR ARCHIVO
+                            <mat-icon aria-hidden="false" aria-label="">attach_file</mat-icon>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="main-btn" *ngIf="currentStep == 2">
+                    <div class="general-btn blue-btn" (click)="uploadCsv()">
+                        <div class="btn-text">SUBIR
+                            <mat-icon aria-hidden="false" aria-label="">cloud_upload</mat-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-btn" *ngIf="currentStep == 3">
+                    <div class="general-btn blue-btn" (click)="saveBanco()">
+                        <div class="btn-text">PROCESAR
+                            <mat-icon aria-hidden="false" aria-label="">cloud_upload</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rifas-box" [class.loading]="loading" *ngIf="currentStep == 3">
+            <table mat-table matSort [dataSource]="depositos" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="{{column.key}}" *ngFor="let column of columnsToDisplayVal">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> {{column.name}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="column.name == 'persona'">
+                            <!-- {{ element['persona']['nombres'] | json }} -->
+                            <span>{{element['persona']['nombres']}} {{element['persona']['apellidos']}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="column.name != 'persona' && column.name != 'tipo'">
+                            {{element[column.key]}}
+                        </ng-container>
+                        <ng-container *ngIf="column.name == 'tipo'">
+                            aaa
+                        </ng-container>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;">
+                </tr>
+            </table>
+        </div>
+        <div id="rifas-box" [class.loading]="loading" *ngIf="currentStep == 4">
+            <table mat-table matSort [dataSource]="depositosProcesados" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="{{column.key}}" *ngFor="let column of columnsToDisplayValResult">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> {{column.name}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="column.name == 'persona'">
+                            <!-- {{ element['persona']['nombres'] | json }} -->
+                            <span>{{element['persona']['nombres']}} {{element['persona']['apellidos']}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="column.name != 'persona' && column.name != 'tipo'">
+                            {{element[column.key]}}
+                        </ng-container>
+                        <ng-container *ngIf="column.name == 'tipo'">
+                            aaa
+                        </ng-container>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayResult"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayResult;">
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

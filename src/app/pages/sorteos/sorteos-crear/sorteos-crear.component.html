@@ -1,0 +1,121 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title> Crear Sorteos</mat-card-title>
+            <mat-card-subtitle>De Toque y Toque</mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card-header>
+    <br>
+    <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="save($event)">
+            <mat-grid-list cols="2" rowHeight="8:1">
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="rifa">Rifa:</mat-label>
+                        <mat-select [(value)]="selectedRifa" formControlName="rifa"
+                            (selectionChange)="rifaChange($event)">
+                            <mat-option *ngFor="let rifa of rifas" [value]="rifa.rifa_id"> Rifa: {{ rifa.rifa_nombre }}
+                                / Fecha: {{rifa.rifa_fechaInicio}} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <span *ngIf="this.form.get('rifa')?.errors?.['required']"> Campo requerido</span>
+                </mat-grid-tile>
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Fecha de Sorteo: </mat-label>
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]="model.fecha_sorteo"
+                            formControlName="fecha_sorteo" [disabled]="fecha_valida">
+                        <mat-hint>DIA / MES / AÑO</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="numero_sorteo">Numero de Sorteo:</mat-label>
+                        <input matInput [(ngModel)]="model.numero_sorteo" name="numero_sorteo"
+                            formControlName="numero_sorteo" type="number" class="form-control" id="numero_sorteo">
+                    </mat-form-field>
+                    <span *ngIf="this.form.get('numero_sorteo')?.errors?.['required']"> Campo requerido</span>
+                    <span *ngIf="this.form.get('numero_sorteo')?.errors?.['min']"> Max of 8 characters</span>
+                </mat-grid-tile>
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="lugar">Lugar: </mat-label>
+                        <input matInput [(ngModel)]="model.lugar" name="lugar" formControlName="lugar" type="text"
+                            class="form-control" id="lugar">
+                    </mat-form-field>
+                    <span *ngIf="this.form.get('lugar')?.errors?.['required']"> Campo requerido</span>
+                </mat-grid-tile>
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="numero_inicial_talon">Desde:</mat-label>
+                        <input matInput [(ngModel)]="model.numero_inicial_talon" name="numero_inicial_talon"
+                            formControlName="numero_inicial_talon" type="number" class="form-control"
+                            id="numero_inicial_talon">
+
+                    </mat-form-field>
+                    <span *ngIf="this.form.get('numero_inicial_talon')?.errors?.['required']"> Campo requerido</span>
+                    <span *ngIf="this.form.get('numero_inicial_talon')?.errors?.['min']"> Ingresar numero mayor a
+                        0</span>
+                </mat-grid-tile>
+
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="numero_final_talon">Hasta:</mat-label>
+                        <input matInput [(ngModel)]="model.numero_final_talon" name="numero_final_talon"
+                            formControlName="numero_final_talon" type="number" class="form-control"
+                            id="numero_final_talon">
+                    </mat-form-field>
+                    <span *ngIf="this.form.get('numero_final_talon')?.errors?.['required']"> Campo requerido</span>
+                    <span *ngIf="this.form.get('numero_final_talon')?.errors?.['min']"> Ingresar numero mayor a 0</span>
+                </mat-grid-tile>
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="talon_valor">Valor de Talon:</mat-label>
+                        <input matInput [(ngModel)]="model.talon_valor" name="talon_valor" formControlName="talon_valor"
+                            type="number" class="form-control" id="talon_valor">
+                    </mat-form-field>
+                    <span *ngIf="this.form.get('talon_valor')?.errors?.['required']"> Campo requerido</span>
+                    <span *ngIf="this.form.get('talon_valor')?.errors?.['min']">Ingresar numero mayor a 0</span>
+                </mat-grid-tile>
+                <mat-grid-tile class="left-grid-tile">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="porcentaje_comision">Porcentaje en Premios:</mat-label>
+                        <input matInput [(ngModel)]="model.porcentaje_comision" name="porcentaje_comision"
+                            formControlName="porcentaje_comision" type="number" class="form-control"
+                            id="porcentaje_comision">
+                    </mat-form-field>
+                    <span *ngIf="this.form.get('porcentaje_comision')?.errors?.['required']"> Campo requerido</span>
+                    <span *ngIf="this.form.get('porcentaje_comision')?.errors?.['min']"> Ingresar numero mayor a
+                        0</span>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="example-button-row">
+            <div *ngIf="!editable">
+                <button mat-raised-button color="primary" [disabled]="form.invalid"
+                    (click)="save($event)">Crear</button>
+                <button mat-raised-button color="accent" (click)="refreshPage()"><mat-icon>replay</mat-icon>
+                    Regresar</button>
+            </div>
+            <div *ngIf="editable">
+                <button mat-raised-button color="primary" [disabled]="form.invalid"
+                    (click)="editar($event)">Editar</button>
+                <button mat-raised-button color="accent" (click)="refreshPage()"><mat-icon>replay</mat-icon>
+                    Regresar</button>
+            </div>
+        </div>
+    </mat-card-actions>
+
+    <div *ngIf="mensaje_error">
+        <span>{{ error }}</span>
+        <br>
+        <ul>
+            <li>
+            </li>
+        </ul>
+    </div>
+</mat-card>

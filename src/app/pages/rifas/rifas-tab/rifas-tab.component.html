@@ -1,0 +1,36 @@
+<mat-tab-group>
+    <mat-tab label="Rifas">
+        <div *ngIf="visible_tabla_rifas == true">
+            <app-rifas-table (mostrar)="receiveMessage($event)">
+            </app-rifas-table>
+        </div>
+        <div *ngIf="visible_form_rifa == true">
+            <app-rifas-crear>
+            </app-rifas-crear>
+            <app-sorteos-list (mostrar)="receiveMessage($event)">
+            </app-sorteos-list>
+        </div>
+        <div *ngIf="visible_form_sorteo == true">
+            <app-sorteos-crear>
+            </app-sorteos-crear>
+            <app-sorteos-list (mostrar)="receiveMessage($event)">
+            </app-sorteos-list>
+        </div>
+        <div *ngIf="visible_form_sorteo_edit == true">
+            <app-sorteos-crear>
+            </app-sorteos-crear>
+        </div>
+    </mat-tab>
+    <mat-tab label="Entregar Rifa">
+        <div>
+            <app-rifas-entrega>
+            </app-rifas-entrega>
+        </div>
+    </mat-tab>
+    <mat-tab label="Talones">
+        <div>
+            <rifas-list>
+            </rifas-list>
+        </div>
+    </mat-tab>
+</mat-tab-group>

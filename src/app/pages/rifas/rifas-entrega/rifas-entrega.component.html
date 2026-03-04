@@ -1,0 +1,98 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title> Entregas de Rifas</mat-card-title>
+            <mat-card-subtitle>De Toque y Toque</mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card-header>
+    <br>
+    <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="save($event)">
+            <mat-stepper orientation="vertical">
+                <mat-step>
+                    <ng-template matStepLabel>Selecciona la rifa y sus sorteos</ng-template>
+                    <br>
+                    <ng-template matStepContent>
+                        <span *ngIf="this.form.get('rifa')?.errors?.['required']">* Campo requerido</span>
+                        <mat-form-field appearance="outline">
+                            <mat-label for="rifa">Rifa:</mat-label>
+                            <mat-select [(value)]="selectedRifa" formControlName="rifa"
+                                (selectionChange)="rifaChange($event)">
+                                <mat-option *ngFor="let rifa of rifas" [value]="rifa.rifa_id">
+                                    Rifa: {{ rifa.rifa_nombre}}
+                                    / Fecha: {{rifa.rifa_fechaInicio}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="visible">
+                            <span *ngIf="this.form.get('sorteos')?.errors?.['required']">* Campo requerido</span>
+                            <app-sorteos-checkbox (validar)="getValidarSorteos($event)"
+                                [selectedRifa]="rifa_id"></app-sorteos-checkbox>
+                        </div>
+                        <br>
+                    </ng-template>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Indicar los numeros que se van a entregar</ng-template>
+                    <br>
+                    <ng-template matStepContent>
+                        <span *ngIf="this.form.get('desde')?.errors?.['required']">* Campo requerido</span>
+                        <span *ngIf="this.form.get('desde')?.errors?.['min']">* Numero mayor a Cero</span>
+                        <mat-form-field appearance="outline">
+                            <mat-label> Desde: </mat-label>
+                            <input matInput [(ngModel)]="model.desde" name="desde" formControlName="desde" type="number"
+                                class="form-control" id="desde">
+                        </mat-form-field>
+                        <span *ngIf="this.form.get('hasta')?.errors?.['required']">* Campo requerido</span>
+                        <span *ngIf="this.form.get('hasta')?.errors?.['min']">* Numero mayor a Cero</span>
+                        <span *ngIf="this.form.get('hasta')?.errors?.['numeroMenorInicial']">* El numero debe se
+                            mayor al inicial</span>
+                        <mat-form-field appearance="outline">
+                            <mat-label> Hasta: </mat-label>
+                            <input matInput [(ngModel)]="model.hasta" name="hasta" formControlName="hasta" type="number"
+                                class="form-control" id="hasta">
+                        </mat-form-field>
+                        <br>
+                      <!-- <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>-->  
+                    </ng-template>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Adjudicar los numeros a un pasajero</ng-template>
+                    <br>
+                    <ng-template matStepContent>
+                        <span *ngIf="this.form.get('pasajeros')?.errors?.['required']">* Campo requerido</span>
+                        <mat-form-field appearance="outline">
+                            <app-autocomplete [value]="selectedPasajero" title="Pasajeros" formControlName="pasajeros"
+                                *ngIf="!pasajerosLoading" [options]="pasajeros"
+                                (result)="pasajeroChange($event)"></app-autocomplete>
+                        </mat-form-field>
+                        <br>
+                      <!-- <button mat-button matStepperPrevious>Back</button> -->  
+                    </ng-template>
+                </mat-step>
+            </mat-stepper>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="example-button-row">
+            <div *ngIf="!editable">
+                <button mat-raised-button color="accent" [disabled]="form.invalid"
+                    (click)="save($event)">Entregar</button>
+            </div>
+        </div>
+    </mat-card-actions>
+
+    <div *ngIf="mensaje_error">
+        <span>{{ error }}</span><br>
+        <ul>
+            <li *ngFor="let numero of numeros_asignados">
+                <button mat-mini-fab color="accent" aria-label="Bookmark icon">
+                    <mat-icon>confirmation_number</mat-icon>
+                </button>
+                - Numero: <strong>{{numero.numero}} </strong>
+                - Sorteo: <strong>{{numero.numero_sorteo}} </strong>
+                - Este numero pertenece a : <strong> {{numero.nombres_pasajero}} {{numero.apellidos_pasajero}} </strong>
+            </li>
+        </ul>
+    </div>
+</mat-card>

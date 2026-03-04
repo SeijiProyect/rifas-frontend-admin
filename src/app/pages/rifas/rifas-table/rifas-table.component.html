@@ -1,0 +1,83 @@
+<div class="spinner">
+    <mat-spinner ng-animate="'animate'" color="accent" *ngIf="loading"></mat-spinner>
+</div>
+<div class="general-container">
+    <div>
+        <div id="main-text">
+            <p>
+                RIFAS
+            </p>
+        </div>
+        <div class="table-filters">
+            <div class="table-filters-row">
+                <div class="table-filters-item-full-width">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput placeholder="Nombres, apellidos, e-mail, cédula, persona id..."
+                            [(ngModel)]="termino">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="table-filters-row">
+                <div class="table-filters-item table-filters-item-1 table-filters-item-datepicker">
+                    <app-datepicker (dateStart)="desdeValue=$event" (dateEnd)="hastaValue=$event"
+                        label="Ingresar fecha:"></app-datepicker>
+                </div>
+                <div class="table-filters-btn table-filters-item-2">
+                    <div class="general-btn blue-btn" (click)="filter()">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
+                        <div class="btn-text">FILTRAR</div>
+                    </div>
+                </div>
+                <div class="table-filters-btn table-filters-item-3">
+                    <div class="general-btn green-btn" (click)="crearRifa()">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">save</mat-icon>
+                        <div class="btn-text">Crear Rifa</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rifas-box" [class.loading]="loading">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #tabla1>
+
+                <ng-container matColumnDef="Id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td mat-cell *matCellDef="let rifa"> {{rifa.rifa_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Fecha">
+                    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                    <td mat-cell *matCellDef="let rifa"> {{rifa.rifa_fechaInicio}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let rifa"> {{rifa.rifa_nombre}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Organizador">
+                    <th mat-header-cell *matHeaderCellDef> Organizador </th>
+                    <td mat-cell *matCellDef="let rifa"> {{rifa.organizador_nombre}} </td>
+                </ng-container>
+
+                <!-- Buttons Column -->
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let rifa">
+                        <button mat-raised-button color="primary" matTooltip="Asignar" (click)="Asignar(rifa)">
+                            <mat-icon>add</mat-icon>Asignar
+                            Sorteo</button>
+                        <button mat-raised-button color="accent" matTooltip="Editar" (click)="Editar(rifa)"><mat-icon>edit</mat-icon></button>
+                        <button mat-raised-button color="warn"
+                            matTooltip="Borrar" (click)="Eliminar(rifa)"><mat-icon>delete_forever</mat-icon></button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+        </div>
+        <mat-paginator [length]="totalPersonas" [pageSize]="20" hidePageSize="true" (page)="pageEvent($event)">
+        </mat-paginator>
+    </div>
+</div>

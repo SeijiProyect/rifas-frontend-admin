@@ -1,0 +1,7 @@
+<mat-form-field appearance="fill">
+    <mat-label>Universidades</mat-label>
+    <mat-select (selectionChange)="universidadChange($event)" [disabled]="loading">
+        <mat-option *ngFor="let universidad of universidades" [value]="universidad.id">
+            {{universidad.Nombre }}</mat-option>
+    </mat-select>
+</mat-form-field>

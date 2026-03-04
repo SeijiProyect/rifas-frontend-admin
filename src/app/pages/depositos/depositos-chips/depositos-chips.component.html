@@ -1,0 +1,44 @@
+<!--<mat-chip-listbox aria-label="Fish selection">
+    <mat-chip-option *ngFor="let item of list" (removed)="remove(item)" (selectionChange)="changeSelected(item)"
+         [selected]="item.state">
+        {{item.id}}
+        <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-chip-option>
+</mat-chip-listbox>-->
+<div style="margin: 30px;">
+    <mat-form-field class="example-chip-list" appearance="fill">
+        <mat-label>Depositos Seleccionados</mat-label>
+        <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip *ngFor="let item of list" (removed)="remove(item)">
+                Id Deposito: {{item.id}} - Saldo: {{item.saldo}}
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip>
+        </mat-chip-list>
+    </mat-form-field>
+    <p>
+        <b>Total: {{totales}} </b>
+    </p>
+    <button mat-raised-button color="primary" (click)="juntar()">Juntar</button>&nbsp;
+</div>
+
+<!--<mat-chip-grid #chipGrid aria-label="Fruit selection">
+    <mat-chip-row *ngFor="let item of list" (removed)="remove(item)">
+        {{item.id}}
+        <button matChipRemove [attr.aria-label]="'remove ' + item">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-chip-row>
+</mat-chip-grid>-->
+
+<!--<mat-chip-set aria-label="Fish selection">
+    <mat-chip *ngFor="let item of list" (removed)="remove(item)">
+        {{item.id}} - {{item.name}}
+        <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-chip>
+</mat-chip-set>-->

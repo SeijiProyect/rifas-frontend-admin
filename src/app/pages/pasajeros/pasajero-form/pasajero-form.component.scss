@@ -1,0 +1,49 @@
+.field {
+  margin-top: 5% !important;
+}
+
+ .left-grid-tile-comment .comment-field {
+  width: 100%;
+  margin-left: 3%;
+}
+
+/*
+.left-grid-tile .comment-field textarea {
+  height: 60px;
+  font-size: 16px;
+  resize: vertical;
+} */
+
+.left-grid-tile {
+  margin-top: 5%;
+  margin-left: 3%;
+
+}
+
+.mat-card-lg-image {
+  width: 152px;
+  height: 152px;
+  position: inherit;
+  left: 10%;
+}
+
+@media (max-width: 1080px) {
+  .left-grid-tile .comment-field textarea {
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .left-grid-tile .comment-field textarea {
+    height: 30px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .left-grid-tile .comment-field textarea {
+    height: 20px;
+    font-size: 12px;
+  }
+}

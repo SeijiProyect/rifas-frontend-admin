@@ -1,0 +1,138 @@
+<form [formGroup]="formDatos" class="container">
+    <mat-card class="example-card" *ngIf="visible == true">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>
+                    <h1> Formulario de Inscripción</h1>
+                </mat-card-title>
+                <mat-card-subtitle> Viaje "{{viaje_nombre}} "</mat-card-subtitle>
+            </mat-card-title-group>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <div class="row" *ngIf="ocultar_grupos == true">
+                <span *ngIf="this.formDatos.get('grupo')?.errors?.['required']">*</span>
+                <app-grupos-list [viaje]="viaje_id" (mensaje)="recibirMensaje($event)" (visible_grupo)="recibirOcultarGrupo($event)"
+                    (selectGrupo)="grupoSeleccionado($event)" formControlName="grupo">
+                </app-grupos-list>
+            </div>
+            <div class="row" *ngIf="ocultar_itinerarios == true">
+                <span *ngIf="this.formDatos.get('itinerario')?.errors?.['required']">*</span>
+                <app-itinerarios-list formControlName="itinerario" [selectedGrupo]="selectedGrupoPadre"
+                    (selectItinerario)="itinerarioSeleccionado($event)" (visible_itinerario)="recibirOcultarItinerario($event)">
+                </app-itinerarios-list>
+            </div>
+            <div class="row">
+                <span *ngIf="this.formDatos.get('primer_nombre')?.errors?.['required']">* Campo requerido</span>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="primer_nombre">Primer Nombre: </mat-label>
+                        <input matInput [(ngModel)]="model.primer_nombre" name="primer_nombre"
+                            formControlName="primer_nombre" type="text" class="form-control" id="primer_nombre">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="segundo_nombre">Segundo Nombre:</mat-label>
+                        <input matInput [(ngModel)]="model.segundo_nombre" name="segundo_nombre"
+                            formControlName="segundo_nombre" type="text" class="form-control" id="segundo_nombre">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <span *ngIf="this.formDatos.get('primer_apellido')?.errors?.['required']">*</span>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="primer_apellido">Primer Apellido: </mat-label>
+                        <input matInput [(ngModel)]="model.primer_apellido" name="primer_apellido"
+                            formControlName="primer_apellido" type="text" class="form-control" id="primer_apellido">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <span *ngIf="this.formDatos.get('segundo_apellido')?.errors?.['required']">*</span>
+                    <span *ngIf="this.formDatos.get('segundo_apellido')?.errors?.['maxLength']"> Max of 8
+                        characters</span>
+                    <mat-form-field appearance="outline">
+                        <mat-label for="segundo_apellido">Segundo Apellido:</mat-label>
+                        <input matInput [(ngModel)]="model.segundo_apellido" name="segundo_apellido"
+                            formControlName="segundo_apellido" type="text" class="form-control" id="segundo_apellido">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <span *ngIf="this.formDatos.get('celular')?.errors?.['required']">*</span>
+                    <mat-form-field appearance="outline">
+                        <mat-label for="celular">Celular:</mat-label>
+                        <input matInput [(ngModel)]="model.celular" name="celular" formControlName="celular"
+                            type="number" class="form-control" id="celular">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <span *ngIf="this.formDatos.get('email')?.errors?.['required']">*</span>
+                    <mat-form-field appearance="outline">
+                        <mat-label for="email">Email:</mat-label>
+                        <input matInput [(ngModel)]="model.email" name="email" formControlName="email" type="email"
+                            class="form-control" id="email">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <span *ngIf="this.formDatos.get('direccion')?.errors?.['required']">*</span>
+                    <mat-form-field appearance="outline">
+                        <mat-label for="direccion">Direccion:</mat-label>
+                        <input matInput [(ngModel)]="model.direccion" name="direccion" formControlName="direccion"
+                            type="text" class="form-control" id="direccion">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <span *ngIf="this.formDatos.get('cedula')?.errors?.['required']">*</span>
+                    <mat-form-field appearance="outline">
+                        <mat-label for="cedula">Cedula:</mat-label>
+                        <input matInput [(ngModel)]="model.cedula" name="cedula" formControlName="cedula" type="number"
+                            class="form-control" id="cedula">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <span *ngIf="this.formDatos.get('fechaNac')?.errors?.['required']">*</span>
+                    <mat-form-field appearance="outline">
+                        <mat-label> Fecha Nacimiento </mat-label>
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]="model.fechaNac"
+                            formControlName="fechaNac">
+                        <mat-hint>DIA / MES / AÑO</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="sexo">Sexo:</mat-label>
+                        <mat-select [(value)]="selectedSexo" formControlName="sexo"
+                            (selectionChange)="sexoChange($event)">
+                            <mat-option value="todos">Indefinido</mat-option>
+                            <mat-option value="F">Mujer</mat-option>
+                            <mat-option value="M">Hombre</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <app-universidades-list (selectUniversidad)="universidadSeleccionado($event)">
+                </app-universidades-list>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="row">
+                <button mat-raised-button color="primary" [disabled]="formDatos.invalid"
+                    (click)="save($event)">Inscribirme al Viaje</button>
+            </div>
+        </mat-card-actions>
+        <div *ngIf="mensaje_error">
+            <span>{{ error }}</span>
+        </div>
+    </mat-card>
+</form>

@@ -1,0 +1,27 @@
+@import '~@angular/material/theming';
+@include mat-core();
+// $mat-custom-primary: ( 50: #e2ede9, 100: #b7d2c8, 200: #87b4a3, 300: #57967e, 400: #338062, 500: #0f6669, 600: #0d613f, 700: #0b5637, 800: #084c2f, 900: #043b20, A100: #71ffb0, A200: #3eff93, A400: #0bff77, A700: #00f16a, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+// 
+// 
+// dTyT
+$config-name: 'dtyt';
+$main-color: #0F6946;
+$btn-color: #006FC9;
+$btn-color-alpha: #006FC9c7;
+$mat-custom-primary: ( 50: #e2ede9, 100: #b7d2c8, 200: #87b4a3, 300: #57967e, 400: #338062, 500: #0f6946, 600: #0d613f, 700: #0b5637, 800: #084c2f, 900: #043b20, A100: #71ffb0, A200: #3eff93, A400: #0bff77, A700: #00f16a, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+// 
+// 
+// CCEE
+// $mat-custom-primary: ( 50: #fff7e0, 100: #ffeab3, 200: #ffdd80, 300: #ffcf4d, 400: #ffc426, 500: #ffba00, 600: #ffb300, 700: #ffab00, 800: #ffa300, 900: #ff9400, A100: #ffffff, A200: #fff9f2, A400: #ffe1bf, A700: #ffd5a6, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #000000, 500: #000000, 600: #000000, 700: #000000, 800: #000000, 900: #000000, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+// $config-name: 'ccee';
+// $main-color: #491b6e;
+// $btn-color: #ffba00;
+// $btn-color-alpha: #ffba00c7;
+//
+//
+//
+$custom-primary: mat-palette($mat-custom-primary);
+$custom-accent: mat-palette($mat-custom-primary, 500, 500, 500);
+$custom-warn: mat-palette($mat-red);
+$custom-theme: mat-light-theme($custom-primary, $custom-accent, $custom-warn);
+@include angular-material-theme($custom-theme);

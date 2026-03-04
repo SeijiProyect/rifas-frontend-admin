@@ -1,0 +1,109 @@
+.container-sticky {
+  //height: 1000px;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+
+.header-sticky {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  /* Asegura que el elemento se muestre por encima del contenido */
+}
+
+
+.sticky-row-left {
+  float: left !important;
+  width: 50% !important;
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 1px;
+  background-color: white;
+  margin-bottom: 2%;
+}
+
+.sticky-row-right {
+  float: right;
+  width: 40%;
+  background-color: white;
+  margin-right: 5%;
+  border-radius: 2%;
+  margin-bottom: 2%;
+}
+
+th {
+  border-radius: 5%;
+}
+
+.trClass {
+  background-color: #0F6946;
+  color: white;
+  text-align: center;
+}
+
+.tableRight {
+  float: right;
+  width: 40%;
+  background-color: rgb(207, 207, 207);
+  margin-right: 5%;
+  border-radius: 2%;
+}
+
+caption {
+  text-align: center;
+  font-weight: bold;
+}
+
+.tableLeft {
+  float: left !important;
+  width: 50% !important;
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 1px;
+}
+
+.tableLeft td,
+.tableLeft th {
+  padding: 0px;
+  margin-right: 0px;
+}
+
+#tdCostoExtra {
+  width: 2%;
+}
+
+.datosDepositos {
+  text-align: center;
+}
+
+.mat-icon {
+  position: relative;
+  margin-right: 5px;
+  vertical-align: middle;
+  top: 3.5px;
+}
+
+.dineroAFavor {
+  color: #07a86b;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.saldoApagar {
+  color: rgb(212, 59, 59);
+  font-size: 150%;
+}
+
+.mat-raised-button {
+  color: #0F6946;
+  font-size: 18px;
+}
+
+hr {
+  width: 95%;
+  height: 0;
+  border: medium none;
+  border-top: 2px dashed rgb(30, 163, 220)!important
+}

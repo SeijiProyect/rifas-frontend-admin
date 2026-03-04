@@ -1,0 +1,26 @@
+.contenedor{
+    font-size: 20px;
+    margin-top: 20px;
+    width: 100%; 
+    display:flex; 
+    flex-direction: row; 
+    overflow: auto;
+}
+
+.columna-izquierda{
+    margin-top: 28px;
+    min-width: 35%
+}
+
+.activa {
+    //color:red;
+    background-color:palegreen !important;
+}
+
+.mat-cell .activa{
+    background-color: antiquewhite;
+}
+
+.active{
+    background-color:red !important;
+}

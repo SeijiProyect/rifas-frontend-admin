@@ -1,0 +1,25 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+// $mat-actotal-primary: ( 50: #e2ede9, 100: #b7d2c8, 200: #87b4a3, 300: #57967e, 400: #338062, 500: #0f6669, 600: #0d613f, 700: #0b5637, 800: #084c2f, 900: #043b20, A100: #71ffb0, A200: #3eff93, A400: #0bff77, A700: #00f16a, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+//dtyt
+$mat-actotal-primary: ( 50: #e2ede9, 100: #b7d2c8, 200: #87b4a3, 300: #57967e, 400: #338062, 500: #0f6946, 600: #0d613f, 700: #0b5637, 800: #084c2f, 900: #043b20, A100: #71ffb0, A200: #3eff93, A400: #0bff77, A700: #00f16a, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+//ccee
+// $mat-actotal-primary: ( 50: #fff7e0, 100: #ffeab3, 200: #ffdd80, 300: #ffcf4d, 400: #ffc426, 500: #ffba00, 600: #ffb300, 700: #ffab00, 800: #ffa300, 900: #ff9400, A100: #ffffff, A200: #fff9f2, A400: #ffe1bf, A700: #ffd5a6, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #000000, 500: #000000, 600: #000000, 700: #000000, 800: #000000, 900: #000000, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+$mat-actotal-secundary: ( 50: #fbf0ec, 100: #f4dacf, 200: #edc1b0, 300: #e5a890, 400: #e09578, 500: #da8260, 600: #d67a58, 700: #d06f4e, 800: #cb6544, 900: #c25233, A100: #ffffff, A200: #ffded6, A400: #ffb6a3, A700: #ffa18a, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #000000, 400: #000000, 500: #000000, 600: #000000, 700: #000000, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #000000, A700: #000000, ));
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$actotal-primary: mat-palette($mat-actotal-primary);
+$actotal-accent: mat-palette($mat-actotal-primary, 500, 500, 500);
+// The warn palette is optional (defaults to red).
+$actotal-warn: mat-palette($mat-red);
+// Create the theme object (a Sass map containing all of the palettes).
+$actotal-theme: mat-light-theme($actotal-primary, $actotal-accent, $actotal-warn);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($actotal-theme);

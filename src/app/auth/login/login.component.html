@@ -1,0 +1,70 @@
+<div id="header">
+    <img id="logo" [src]="globalService.getLogoRifasUrl()" alt="">
+</div>
+<div class="spinner">
+    <mat-spinner ng-animate="'animate'" color="accent" *ngIf="loading"></mat-spinner>
+</div>
+<div class="general-container login-container" *ngIf="!loading && !forgot && !forgetPasswordSuccess && !newUser">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <div id="main-text">
+            SISTEMA DE ADMINISTRACIÓN
+        </div>
+        <div class="general-class-form">
+            <input placeholder="E-Mail" value="" name="mail" #mail="ngModel" [(ngModel)]="mailTxt">
+            <input placeholder="Contraseña" type="password" name="password" #password="ngModel" value="" [(ngModel)]="passTxt">
+        </div>
+        <div class="invalid-form">
+            {{message}}
+        </div>
+        <div class="general-btn main-color green-btn" (click)="triggerSubmit()">
+            <div class="btn-text">INGRESAR</div>
+        </div>
+        <div class="general-btn main-color" (click)="showForgot()">
+            <div class="btn-text">OLVIDÉ MI CONTRASEÑA</div>
+        </div>
+    </form>
+</div>
+<div class="general-container login-container" *ngIf="!loading && !forgot && !forgetPasswordSuccess && newUser">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <div id="main-text">
+            INGRESÁ<br>UNA NUEVA<br>CONTRASEÑA
+        </div>
+        <div class="general-class-form">
+            <input placeholder="Contraseña" type="password" name="password" #password="ngModel" value="" [(ngModel)]="passTxt">
+            <input placeholder="Repetir contraseña" type="password" value="" name="repassword" #mail="ngModel" [(ngModel)]="repassTxt">
+        </div>
+        <div class="invalid-form">
+            {{message}}
+        </div>
+        <div class="general-btn main-color green-btn" (click)="triggerFirstSubmit()">
+            <div class="btn-text">REGISTRAR</div>
+        </div>
+        <div class="general-btn main-color" (click)="showForgot()">
+            <div class="btn-text">OLVIDÉ MI CONTRASEÑA</div>
+        </div>
+    </form>
+</div>
+<div class="center-container login-container" *ngIf="!loading && forgot && !forgetPasswordSuccess && !newUser">
+    <div id="main-text">
+        INGRESÁ TU EMAIL<br>Y TE ENVIAREMOS<br>UN LINK A TU CORREO
+    </div>
+    <div class="general-class-form">
+        <input placeholder="E-Mail" value="" [(ngModel)]="forgetPassMail">
+    </div>
+    <div [ngClass]="{'invalid-form': !forgetPasswordSuccess, 'valid-form': forgetPasswordSuccess }">
+        {{message}}
+    </div>
+    <div class="general-btn main-color green-btn" (click)="forgotPassword()">
+        <div class="btn-text">ENVIAR</div>
+    </div>
+    <div class="general-btn main-color white-btn" (click)="showLogin()">
+        <div class="btn-text">VOLVER</div>
+    </div>
+</div>
+<div class="center-container login-container" *ngIf="!loading && forgetPasswordSuccess">
+    <div id="main-text">
+        <div [ngClass]="{'invalid-form': !forgetPasswordSuccess, 'valid-form': forgetPasswordSuccess }">
+            {{message}}
+        </div>
+    </div>
+</div>

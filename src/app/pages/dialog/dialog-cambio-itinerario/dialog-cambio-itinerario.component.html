@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Confirmar</h2>
+<div mat-dialog-content>
+    <p>¿Está seguro que desea cambiar el Itinerario? </p>
+    <!--<ul>
+        <li><del><strong>" {{ data.Itinerario_1_nombre }}"</strong></del></li>
+
+        <li><strong>" {{ data.Itinerario_2_nombre }}"</strong></li>
+    </ul>-->
+    <p><del><strong>" {{ data.Itinerario_1_nombre }}"</strong></del></p>
+    <p style="text-align: center;"> por </p>
+    <p style="color:#018749;"><strong>" {{ data.Itinerario_2_nombre }}"</strong></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button color="primary" (click)="onConfirmClick()">Confirmar</button>
+</div>

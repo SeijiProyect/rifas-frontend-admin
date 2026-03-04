@@ -1,0 +1,106 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{ model.nombres }}</mat-card-title>
+      <mat-card-subtitle>{{ model.apellidos }}</mat-card-subtitle>
+      <img mat-card-lg-image [src]="foto" alt="Image of a Shiba Inu">
+      <input type="file" #fileInput (change)="uploadPhoto($event)" accept="image/*" style="display:none;">
+      <button mat-icon-button *ngIf="!photoUrl" (click)="fileInput.click()" matTooltip="Cargar Foto"
+        matTooltipPosition="after">
+        <mat-icon>add_a_photo</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="photoUrl" matTooltip="Guardar Foto" matTooltipPosition="below">
+        <mat-icon color="primary" (click)="guardarFoto()">save</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="photoUrl" (click)="borrarFoto()" matTooltip="Borrar Foto"
+        matTooltipPosition="after">
+        <mat-icon color="warn">clear</mat-icon>
+      </button>
+    </mat-card-title-group>
+  </mat-card-header>
+  <br>
+  <mat-card-content>
+    <form [formGroup]="formDatosPersonales" (ngSubmit)="save($event)">
+      <mat-grid-list cols="2" rowHeight="8:1">
+        <mat-grid-tile class="left-grid-tile">
+          <mat-form-field appearance="outline">
+            <mat-label for="id">Persona Id: </mat-label>
+            <input matInput [(ngModel)]="model.id" name="id" formControlName="id" type="text" class="form-control" id="id">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label for="cedula">Cedula:</mat-label>
+            <input matInput [(ngModel)]="model.cedula" name="cedula" formControlName="cedula" maxlength="8" 
+            type="number" class="form-control" id="cedula">
+          </mat-form-field>
+          <span *ngIf="this.formDatosPersonales.get('cedula')?.errors?.['required']"> Field is required</span>
+          <span *ngIf="this.formDatosPersonales.get('cedula')?.errors?.['maxLength']"> Max of 8 characters</span>
+        </mat-grid-tile>
+        <mat-grid-tile class="left-grid-tile">
+          <mat-form-field appearance="outline">
+            <mat-label for="nombre">Nombre:</mat-label>
+            <input matInput [(ngModel)]="model.nombres" name="nombre" formControlName="nombre" type="text" 
+            class="form-control" id="nombre">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label for="apellido">Apellido:</mat-label>
+            <input matInput [(ngModel)]="model.apellidos" name="apellido" formControlName="apellido" type="text" class="form-control" id="apellido">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile class="left-grid-tile">
+          <mat-form-field appearance="outline">
+            <mat-label for="celular">Celular:</mat-label>
+            <input matInput [(ngModel)]="model.celular" name="celular" formControlName="celular" type="number" class="form-control" id="celular">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label for="email">Email:</mat-label>
+            <input matInput [(ngModel)]="model.email" name="email" formControlName="email" type="text" class="form-control" id="email">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile class="left-grid-tile">
+          <mat-form-field appearance="outline">
+            <mat-label for="direccion">Direccion:</mat-label>
+            <input matInput [(ngModel)]="model.direccion" name="direccion" formControlName="direccion" type="text" class="form-control"
+              id="direccion" >
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label> Fecha Nacimiento </mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="model.fecha_nac" formControlName="fechaNac" [disabled]="!editable">
+            <mat-hint>DIA / MES / AÑO</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile class="left-grid-tile">
+          <mat-form-field appearance="outline" >
+            <mat-label for="sexo">Sexo:</mat-label>
+            <mat-select [(value)]="selectedSexo" formControlName="sexo" (selectionChange)="sexoChange($event)" [disabled]="!editable">
+              <mat-option value="todos">Indefinido</mat-option>
+              <mat-option value="F">Mujer</mat-option>
+              <mat-option value="M">Hombre</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="example-button-row">
+      <div *ngIf="!editable">
+        <button mat-raised-button color="primary" (click)="editar()">Editar información </button>
+      </div>
+      <div *ngIf="editable">
+        <button mat-raised-button color="accent" (click)="deshacer()">Deshacer</button>
+        <button mat-raised-button color="warn" (click)="save($event)" [disabled]="!editable">Guardar </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

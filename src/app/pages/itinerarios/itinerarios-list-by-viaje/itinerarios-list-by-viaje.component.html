@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill">
+    <mat-label>Seleccionar Itinerario</mat-label>
+    <mat-select (selectionChange)="itinerarioChange($event)" [(value)]="selected" [disabled]="loading">
+        <mat-option *ngFor="let itinerario of itinerarios" [value]="itinerario">{{itinerario.Nombre }}</mat-option>
+    </mat-select>
+</mat-form-field>

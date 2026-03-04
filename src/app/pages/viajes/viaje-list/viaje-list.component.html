@@ -1,0 +1,7 @@
+<mat-form-field appearance="fill">
+  <mat-label>Viajes</mat-label>
+  <mat-select [(value)]="selected" (selectionChange)="viajeChange($event)">
+    <mat-option *ngFor="let viaje of viajes" [value]="viaje.viaje_id">ID VIAJE:{{viaje.viaje_id}} /
+      Viaje: {{ viaje.viaje_nombre }} </mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Comprador</h1>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+
+        <mat-form-field appearance="outline">
+            <mat-label for="id">Comprador Id: </mat-label>
+            <b>ID:</b> {{ model.id }} <br>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label for="nombre">Nombre:</mat-label>
+            <b>Nombre:</b> {{ model.nombres }} <br>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label for="email">Email:</mat-label>
+            <b>Email:</b> {{ model.email }} <br>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label for="celular">Celular:</mat-label>
+            <b>Celular:</b> {{ model.celular }} <br>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label for="departamento">Departamento:</mat-label>
+            <b>Departamento:</b> {{ model.departamento }} <br>
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cerrar</button>
+</div>
