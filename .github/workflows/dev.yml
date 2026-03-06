@@ -28,5 +28,4 @@ jobs:
         username: if0_41246838
         password: JnSt0MGYoN7oLmx
         protocol: ftp
-        local-dir: ./dist/admin-rifas/
         server-dir: admin-rifas.ct.ws/htdocs/
