@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: |
         npm install
-        npx  npx ng build --configuration dev
+        npx ng build --configuration dev
