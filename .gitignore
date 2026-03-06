@@ -49,5 +49,5 @@ Thumbs.db
 environment.ts
 
 # Configuracion ANGULAR
-package-lock.json
-package.json
+#package-lock.json
+#package.json
