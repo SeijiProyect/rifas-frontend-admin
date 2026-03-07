@@ -4,21 +4,27 @@ on:
     branches:
       - prod
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12]
+
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
       with:
-        node-version: '12'
-        cache: 'npm'
+        node-version: ${{ matrix.node-version }}
     - run: npm install
-#    - run: npx ng build --configuration=production
-#    - uses: SamKirkland/FTP-Deploy-Action@4.3.2
-#      with:
-#        server: ${{ secrets.FTP_SERVER }}
-#        username: ${{ secrets.FTP_USERNAME }}
-#        password: ${{ secrets.FTP_PASSWORD }}
-#        protocol: ftps
-#        local-dir: ./dist/rifas-admin/
-#        server-dir: admin-rifas.ct.ws/
+    - run: npx ng build --configuration dev
+    - uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ftpupload.net
+        username: if0_41246838
+        password: JnSt0MGYoN7oLmx
+        protocol: ftp
+        local-dir: ./dist/rifas-admin/
+        server-dir: admin-rifas.ct.ws/htdocs/
