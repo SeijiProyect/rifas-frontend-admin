@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: 'https://127.0.0.1:8000'
+  //url: 'https://127.0.0.1:8000'
+  url:'https://api-rifas-dev.ct.ws'
   //url:'https://api-rifas.ct.ws'
 
   //url: 'https://apirifas.detoqueytoque.com',
