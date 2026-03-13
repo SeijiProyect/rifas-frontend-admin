@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   //url: 'https://apirifas.detoqueytoque.com',
-  url:'https://api-rifas.ct.ws',
+  url: '/api' // Apunta a htdocs/api
 }

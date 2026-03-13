@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npx ng build --configuration dev
+    - run: npx ng build --configuration prod
     - uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
         server: ftpupload.net
@@ -27,4 +27,4 @@ jobs:
         password: JnSt0MGYoN7oLmx
         protocol: ftp
         local-dir: ./dist/rifas-admin/
-        server-dir: admin-rifas.ct.ws/htdocs/
+        server-dir: toqueytoque-rifas.ct.ws/htdocs/admin/
