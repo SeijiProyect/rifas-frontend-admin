@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npx ng build --configuration prod
+    - run: npx ng build --configuration=production
     - uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
         server: ftpupload.net
