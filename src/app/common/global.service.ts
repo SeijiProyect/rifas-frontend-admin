@@ -9,7 +9,7 @@ export class GlobalService {
   // Config dTyT
   private configName = 'dtyt';
   private talonType = 'multi';
-  private logoRifasUrl = '/assets/imgs/logo.svg';
+  private logoRifasUrl = 'assets/imgs/logo.svg'; //cambio a ruta realtiva (InfinityFree)
   private cantidadTalones = 5;
   private tokenName = 'token-admin-dtyt';
   private showEntregarRifas = true;
