@@ -53,7 +53,7 @@ export class ApiService {
 
   tokenValidation(): Observable<boolean> {
     return this.http
-      .get(this.url + '/api/validate', {
+      .get(this.url + '/admin/api/validate', {
         headers: this.authHeader,
       })
       .pipe(
